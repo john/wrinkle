@@ -1,0 +1,29 @@
+%p#notice= notice
+
+%p
+  %b Source:
+  = @document.source
+
+%p
+  %b Source ID:
+  = @document.source_id
+%p
+  %b Author:
+  = @document.author
+%p
+  %b Dateline:
+  = @document.dateline
+%p
+  %b Title:
+  = @document.title
+%p
+  %b Subtitle:
+  = @document.subtitle
+%p
+  %b HTML:
+%p
+  = @document.body_html.html_safe
+
+= link_to 'Edit', edit_document_path(@document)
+\|
+= link_to 'Back', documents_path

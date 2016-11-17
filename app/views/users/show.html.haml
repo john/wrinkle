@@ -1,0 +1,8 @@
+%p
+  Name: #{@user.name}
+
+%p
+  - if @user.facebook_authed?
+    Facebook account authorized (#{link_to 'remove', identity_path(@user.facebook_identity), method: :delete})
+  - else
+    = link_to 'Connect facebook account', omniauth_authorize_path('user', 'facebook')

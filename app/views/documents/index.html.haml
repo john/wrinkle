@@ -1,0 +1,37 @@
+:css
+  h1 { margin-bottom: 40px; }
+  h2 { margin-top: 40px; }
+  small { font-size: 15px; font-weight: bold; margin-left: 10px;}
+  small a { color: #aaa; }
+
+%h1
+  .float-xs-right{ style: 'width: 400px; margin-top: 5px;'}
+    .input-group
+      %input.form-control{"aria-describedby": "basic-addon1", placeholder: "Search all documents", type: "text"}
+      %span.input-group-btn
+        %button.btn.btn-secondary{type: "button", onclick: "alert('Psych!');"} Go
+  Documents
+
+%h2
+  Quip
+  %small
+    = link_to 'Update', quip_get_threads_path
+
+%ul.doc-list
+  - @quip_docs.each do |doc|
+    %li
+      = link_to doc.title, doc, target: '_blank'
+
+%h2
+  Google Docs
+  %small
+    = link_to 'Update', quip_get_threads_path
+
+%br
+%br
+TODO
+%ol
+  %li
+    check timestamp getting threads, only get new and updated ones
+  %li
+    Next to each doc title should show link 'Publish AMP', 'Publish FIA', etc
