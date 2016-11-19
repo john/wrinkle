@@ -3,18 +3,25 @@ class Identity < ApplicationRecord
 
   validates_presence_of :uid, :provider
   validates_uniqueness_of :uid, :scope => :provider
-
-  # def self.find_for_oauth(auth)
-  #   find_or_create_by(uid: auth.uid, provider: auth.provider)
-  # end
+  validates :provider, length: { maximum: 50 }
+  validates :uid, length: { maximum: 128 }
+  validates :token, length: { maximum: 512 }
+  validates :refresh_token, length: { maximum: 512 }
+  validates :name, length: { maximum: 128 }
+  validates :email, length: { maximum: 128 }
+  validates :image_url, length: { maximum: 128 }
 
   def self.find_for_oauth(auth)
     if identity = find_by(uid: auth.uid, provider: auth.provider)
       identity
+      identity.token = auth.credentials.token
+      identity.refresh_token = auth.credentials.refresh_token
+      identity.save
     else
       params = {  uid: auth.uid,
                   provider: auth.provider,
                   token: auth.credentials.token,
+                  refresh_token: auth.credentials.refresh_token.blank? ? '' : auth.credentials.refresh_token,
                   name: auth.info.name,
                   email: auth.info.email,
                   image_url: auth.info.image,
@@ -24,17 +31,3 @@ class Identity < ApplicationRecord
     end
   end
 end
-
-
-# auth: #<OmniAuth::AuthHash
-#
-# credentials=#<OmniAuth::AuthHash
-#   expires=true
-#   expires_at=1484523472    token="EAAEMzrPeq5YBAGHkEMHibHTsz9aMZBxzET2YzirdCCAVpZBeZCOtMPZBSpoHhvapuRZBhbrRxdyrcUvP98tZBHsePlxJWJLEy7iNUy80niQGU6ogZCeEYUzJYiI4vUbok6XgK4ESkrCa9gjQDhvQnJteoV1bMFVk983vBVmzY2ndPY0oU5qhM2F">
-#
-#   extra=#<OmniAuth::AuthHash
-#     raw_info=#<OmniAuth::AuthHash
-#       email="john@fnnny.com"
-#       id="675003241"
-#       name="John McGrath">> info=#<OmniAuth::AuthHash::InfoHash email="john@fnnny.com"
-#       image="http://graph.facebook.com/v2.6/675003241/picture" name="John McGrath"> provider="facebook" uid="675003241">

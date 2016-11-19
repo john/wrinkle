@@ -1,8 +1,32 @@
 %p
   Name: #{@user.name}
 
-%p
-  - if @user.facebook_authed?
-    Facebook account authorized (#{link_to 'remove', identity_path(@user.facebook_identity), method: :delete})
-  - else
-    = link_to 'Connect facebook account', omniauth_authorize_path('user', 'facebook')
+- if @user.facebook_authed?
+  %p
+    Facebook account authorized (#{link_to 'remove', identity_path(@user.get_identity('facebook')), method: :delete})
+- else
+  %p
+    = link_to 'Connect Facebook account', omniauth_authorize_path('user', 'facebook')
+
+
+- if @user.google_authed?
+  %p
+    Google account authorized (#{link_to 'remove', identity_path(@user.get_identity('google')), method: :delete})
+- else
+  %p
+    = link_to 'Connect Google account', omniauth_authorize_path('user', 'google_oauth2')
+
+
+
+
+  %p
+    Facebook pages you can publish to:
+
+    - if @facebook_pages
+      %ul
+        %li
+          Some pages here
+    - else
+      %p
+        %i
+          None.

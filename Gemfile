@@ -3,18 +3,23 @@ ruby '2.3.1'
 
 gem 'devise'
 gem 'friendly_id', :git => 'https://github.com/norman/friendly_id.git'
+gem 'google-api-client'
 gem 'haml-rails'
 gem 'humane-rails'
 gem 'jquery-rails'
+# gem 'koala'
 gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
 gem 'pg'
 gem 'puma'
-gem 'rails'
+gem 'rails', '>= 5.0.0', '< 5.1'
+gem 'rest-client', '>= 1.7.3'
 gem 'quip'
 gem 'rspec-rails'
 gem 'sass-rails'
 gem 'turbolinks', '~> 5'
 gem 'uglifier', '>= 1.3.0'
+gem 'unirest', :git => 'https://github.com/Mashape/unirest-ruby'
 
 # Use CoffeeScript for .coffee assets and views
 # gem 'coffee-rails', '~> 4.2'
@@ -34,6 +39,7 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
+  gem 'bundler-audit', require: false
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
   gem 'dotenv-rails'

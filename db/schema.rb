@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(version: 20161116225138) do
     t.datetime "source_created_at"
     t.datetime "source_updated_at"
     t.string   "source_link",       default: "", null: false
+    t.string   "kind",              default: "", null: false
+    t.string   "mime_type",         default: "", null: false
     t.string   "author",            default: "", null: false
     t.string   "dateline",          default: "", null: false
     t.string   "title",             default: "", null: false
@@ -33,16 +35,17 @@ ActiveRecord::Schema.define(version: 20161116225138) do
   end
 
   create_table "identities", force: :cascade do |t|
-    t.string   "uid",        default: "", null: false
-    t.string   "provider",   default: "", null: false
-    t.string   "token",      default: "", null: false
-    t.string   "expires_at", default: "", null: false
-    t.string   "name",       default: "", null: false
-    t.string   "email",      default: "", null: false
-    t.string   "image_url",  default: "", null: false
+    t.string   "uid",           default: "", null: false
+    t.string   "provider",      default: "", null: false
+    t.string   "token",         default: "", null: false
+    t.string   "refresh_token", default: "", null: false
+    t.string   "expires_at",    default: "", null: false
+    t.string   "name",          default: "", null: false
+    t.string   "email",         default: "", null: false
+    t.string   "image_url",     default: "", null: false
     t.integer  "user_id"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.index ["user_id"], name: "index_identities_on_user_id", using: :btree
   end
 

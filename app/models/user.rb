@@ -12,20 +12,36 @@ class User < ApplicationRecord
 
   has_many :identities
 
+  validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+  validates_format_of :name, with: /\A[^"@\n]*\z/
+  validates :name, length: { maximum: 50 }, presence: true
+  validates :slug, length: { maximum: 200 }
+  validates :email, length: { maximum: 50 }
+  validates :image_url, length: { maximum: 128 }
+
   def facebook_authed?
-    Identity.where(provider: 'facebook', user_id: self.id).present?
+    !!(Identity.where(provider: 'facebook', user_id: self.id).count > 0)
   end
 
-  def facebook_identity
-    if id = Identity.where(provider: 'facebook', user_id: self.id).first
-      id
-    else
-      nil
-    end
+  def google_authed?
+    !!(Identity.where(provider: 'google_oauth2', user_id: self.id).count > 0)
   end
 
-  validates :name, presence: true
-  validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update
+  def get_identity(provider)
+    provider = 'google_oauth2' if provider == 'google'
+    (id = Identity.where(provider: provider.downcase, user_id: self.id).first) ? id : nil
+  end
+
+  def google_secrets
+    identity = get_identity('google')
+    {web:
+      { access_token: identity.token,
+        refresh_token: identity.refresh_token,
+        client_id: ENV['GOOGLE_OAUTH_CLIENT_ID'],
+        client_secret: ENV['GOOGLE_OAUTH_SECRET']
+      }
+    }
+  end
 
   def self.find_for_oauth(auth, signed_in_resource = nil)
     # Get the identity and user if they exist
@@ -47,7 +63,6 @@ class User < ApplicationRecord
       # email_is_verified = auth.info.email && (auth.info.verified || auth.info.verified_email)
       # email = auth.info.email if email_is_verified
       email = auth.info.email
-
       user = User.where(:email => email).first if email
 
       # Create the user if it's a new registration
@@ -55,7 +70,7 @@ class User < ApplicationRecord
         user = User.new(
           name: auth.extra.raw_info.name,
           #username: auth.info.nickname || auth.uid,
-          email: email ? email : "#{TEMP_EMAIL_PREFIX}-#{auth.uid}-#{auth.provider}.com",
+          email: email.present? ? email : "#{TEMP_EMAIL_PREFIX}-#{auth.uid}-#{auth.provider}.com",
           image_url: auth.info.image ? auth.info.image : "",
           password: Devise.friendly_token[0,20]
         )

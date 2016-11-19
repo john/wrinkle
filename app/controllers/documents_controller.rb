@@ -3,6 +3,7 @@ class DocumentsController < ApplicationController
 
   def index
     @quip_docs = Document.where(source: 'quip')
+    @google_docs = Document.where(source: 'google_drive')
   end
 
   def show
@@ -38,6 +39,27 @@ class DocumentsController < ApplicationController
     redirect_to documents_url, notice: 'Document was successfully destroyed.'
   end
 
+  def retrieve
+    if params[:document_id].present?
+      # thread = api call to get specific thread
+      # Document.create_or_update_from_quip_thread(thread)
+    else
+      if params[:provider] == 'quip'
+        threads = QuipService.get_all_threads
+        threads.each do |thread|
+          Document.create_or_update_from_quip_threads(thread)
+        end
+      elsif params[:provider] == 'google'
+        files = GoogleDriveService.get_all_documents( current_user )
+        files.each do |file|
+          Document.create_or_update_from_google_file(file)
+        end
+      end
+    end
+    redirect_back(fallback_location: root_path)
+  end
+
+
   private
 
     def set_document
@@ -45,7 +67,7 @@ class DocumentsController < ApplicationController
     end
 
     def document_params
-      params.require(:document).permit(:source, :source_id, :source_created_at, :source_updated_at, :source_link, :author, :dateline, :title, :subtitle, :body_html)
+      params.require(:document).permit(:source, :source_id, :source_created_at, :source_updated_at, :source_link, :kind, :mime_type, :author, :dateline, :title, :subtitle, :body_html)
     end
 
 end

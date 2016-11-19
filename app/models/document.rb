@@ -2,6 +2,8 @@ class Document < ApplicationRecord
   extend FriendlyId
   friendly_id :title, use: :slugged
 
+  validates :title, length: { maximum: 200 }, presence: true
+
   def self.create_or_update_from_quip_threads(thread)
     if @document = Document.where(source: 'quip', source_id: thread['thread']['id']).first
       source_updated_at = Time.at( (thread['thread']['updated_usec'].to_i / 1000000) ).utc.to_datetime
@@ -12,6 +14,34 @@ class Document < ApplicationRecord
       @document = Document.create!( Document.thread_hash(thread) )
     end
   end
+
+  # TODO: should this make another call and gets the full contents of the doc?
+  #       probably on demand--stubs can be used for list view & typeahead
+  def self.create_or_update_from_google_file(file)
+    # if @document = Document.where(source: 'google', source_id: file.id).first
+    #   # TODO: see if you can update timestamp from Google, update only if necessary
+    #   # @document = Document.update( /* info from file*/ )
+    # else
+      @document = Document.create!( source: 'google_drive', source_id: file.id, kind: file.kind, mime_type: file.mime_type, title: file.name )
+    # end
+  end
+
+  def link
+    if self.source == 'google_drive'
+      if self.mime_type.include?('spreadsheet')
+        "https://docs.google.com/spreadsheets/d/#{source_id}"
+      elsif self.mime_type.include?('document')
+        "https://docs.google.com/document/d/#{source_id}"
+      else
+        self.source_link
+      end
+    else
+      self.source_link
+    end
+  end
+
+
+  private
 
   def self.thread_hash(thread)
     { source: 'quip',
