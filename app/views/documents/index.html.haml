@@ -23,6 +23,13 @@
 
 %h2
   Google Docs
-  %small
-    = link_to 'Update', retrieve_documents_path(:google)
-= render partial: 'documents', locals: {documents: @google_docs}
+  - if current_user.google_authed?
+    %small
+      = link_to 'Update', retrieve_documents_path(:google)
+
+- if current_user.google_authed?
+  = render partial: 'documents', locals: {documents: @google_docs}
+- else
+  %p
+    %i
+      Connect your Google account to import from Google Drive.

@@ -45,14 +45,14 @@ class DocumentsController < ApplicationController
       # Document.create_or_update_from_quip_thread(thread)
     else
       if params[:provider] == 'quip'
-        threads = QuipService.get_all_threads
+        threads = QuipService.get_all_documents(current_user)
         threads.each do |thread|
-          Document.create_or_update_from_quip_threads(thread)
+          Document.create_or_update_from_quip(thread)
         end
       elsif params[:provider] == 'google'
-        files = GoogleDriveService.get_all_documents( current_user )
+        files = GoogleDriveService.get_all_documents(current_user)
         files.each do |file|
-          Document.create_or_update_from_google_file(file)
+          Document.create_or_update_from_google_drive(file)
         end
       end
     end

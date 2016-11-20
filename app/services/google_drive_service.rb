@@ -2,21 +2,39 @@ class GoogleDriveService
   require 'google/apis/drive_v3'
   require 'google/api_client/client_secrets.rb'
 
+  # https://developers.google.com/drive/v3/reference/
 
   # TODO: at some point this will have to be getting content
   # by a variety of user id's, or from a shared location in quip
   # that all contributors are adding to.
 
-  def self.get_document(document_id)
+
+  # GET https://www.googleapis.com/drive/v3/files/fileId
+  def self.get_document(user, id)
+    client = get_authorized_client(user)
+    client.get_file(id, fields:'createdTime,description,fileExtension,modifiedTime,name,originalFilename,owners,webContentLink')
   end
 
-  # at the moment this is actually getting all desktop threads. same thing as all threads?
-  def self.get_all_documents( user )
+  # GET https://www.googleapis.com/drive/v3/files
+  def self.get_all_documents(user)
+    client = get_authorized_client(user)
+    client.list_files(fields: 'files(id,name,created_time,modified_time,kind,mime_type,web_view_link)').files
+  end
+
+  def self.get_body(user, id)
+    client = get_authorized_client(user)
+    client.export_file(id, 'text/html')
+  end
+
+
+  private
+
+  def self.get_authorized_client(user)
     secrets = Google::APIClient::ClientSecrets.new( user.google_secrets )
-    drive = Google::Apis::DriveV3::DriveService.new
-    drive.authorization = secrets.to_authorization
-    drive.authorization.refresh!
-    drive.list_files.files
+    client = Google::Apis::DriveV3::DriveService.new
+    client.authorization = secrets.to_authorization
+    client.authorization.refresh!
+    client
   end
 
 end

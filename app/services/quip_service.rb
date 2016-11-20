@@ -1,14 +1,11 @@
 class QuipService
 
-  # TODO: at some point this will have to be getting content
-  # by a variety of user id's, or from a shared location in quip
-  # that all contributors are adding to.
-
-  def self.get_thread(thread_id)
+  def self.get_document(user, id)
   end
 
   # at the moment this is actually getting all desktop threads. same thing as all threads?
-  def self.get_all_threads
+  # TODO: get by user
+  def self.get_all_documents(user)
     user = QuipClient.get_authenticated_user()
     desktop = QuipClient.get_folder(user['desktop_folder_id'])
 

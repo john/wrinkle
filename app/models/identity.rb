@@ -13,10 +13,10 @@ class Identity < ApplicationRecord
 
   def self.find_for_oauth(auth)
     if identity = find_by(uid: auth.uid, provider: auth.provider)
-      identity
       identity.token = auth.credentials.token
       identity.refresh_token = auth.credentials.refresh_token
       identity.save
+      identity
     else
       params = {  uid: auth.uid,
                   provider: auth.provider,

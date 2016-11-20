@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe "documents/index", type: :view do
   before(:each) do
+    allow(view).to receive(:current_user).and_return( create(:user)  )
+
     assign(:quip_docs, [
       Document.create!(
         :author => "Author",
