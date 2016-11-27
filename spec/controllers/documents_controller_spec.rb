@@ -18,7 +18,7 @@ RSpec.describe DocumentsController, type: :controller do
   describe "GET #index" do
     let(:document) { create :document }
 
-    it "redirects if not logged in" do
+    it "fails if not logged in" do
       get :index
       expect(response).to have_http_status(302)
     end
@@ -36,7 +36,7 @@ RSpec.describe DocumentsController, type: :controller do
   describe "GET #show" do
     let(:document) { create :document }
 
-    it "redirects if not logged in" do
+    it "fails if not logged in" do
       document = create :document
       get :show, params: {id: document.to_param}, session: valid_session
       expect(response).to have_http_status(302)
@@ -53,7 +53,7 @@ RSpec.describe DocumentsController, type: :controller do
   end
 
   describe "GET #new" do
-    it "redirects if not logged in" do
+    it "fails if not logged in" do
       get :new, params: {}, session: valid_session
       expect(response).to have_http_status(302)
     end
@@ -71,7 +71,7 @@ RSpec.describe DocumentsController, type: :controller do
   describe "GET #edit" do
     let(:document) { create :document }
 
-    it "redirects if not logged in" do
+    it "fails if not logged in" do
       get :edit, params: {id: document.to_param}, session: valid_session
       expect(response).to have_http_status(302)
     end
@@ -87,7 +87,7 @@ RSpec.describe DocumentsController, type: :controller do
   end
 
   describe "POST #create" do
-    it "redirects if not logged in" do
+    it "fails if not logged in" do
       post :create, params: {document: valid_attributes}, session: valid_session
       expect(response).to have_http_status(302)
     end
@@ -142,7 +142,7 @@ RSpec.describe DocumentsController, type: :controller do
   "commit"=>"Save", "id"=>"grouper-overview"}
 
 
-    it "redirects if not logged in" do
+    it "fails if not logged in" do
       document = create :document
       put :update, params: {id: document.id, document: new_attributes}, session: valid_session
       expect(response).to have_http_status(302)

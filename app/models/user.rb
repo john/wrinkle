@@ -11,13 +11,18 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :identities
+  belongs_to :organization
 
   validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
   validates_format_of :name, with: /\A[^"@\n]*\z/
   validates :name, length: { maximum: 50 }, presence: true
-  validates :slug, length: { maximum: 200 }
+  validates :slug, length: { maximum: 100 }
   validates :email, length: { maximum: 50 }
   validates :image_url, length: { maximum: 128 }
+
+  def quip_authed?
+    (self.organization.present? && self.organization.quip_authed?)
+  end
 
   def facebook_authed?
     !!(Identity.where(provider: 'facebook', user_id: self.id).count > 0)

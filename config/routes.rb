@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  mount RailsAdmin::Engine => '/admin2', as: 'rails_admin'
+  resources :organizations
   root 'home#index'
 
   devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }
@@ -9,5 +11,12 @@ Rails.application.routes.draw do
 
   resources :identities, only: [:destroy]
   resources :users, only: [:show, :destroy]
+
+  get '/admin', to: redirect('/admin/organizations')
+  namespace :admin do
+    resources :authentications, only: [:index, :new, :create]
+    resources :organizations, only: [:index, :new, :create]
+    resources :users, only: [:index]
+  end
 
 end

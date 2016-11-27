@@ -1,12 +1,19 @@
 class Identity < ApplicationRecord
+  include Encryption
+
+  attr_encrypted :token, :key => :encryption_key
+  attr_encrypted :refresh_token, :key => :encryption_key
+
   belongs_to :user
 
   validates_presence_of :uid, :provider
   validates_uniqueness_of :uid, :scope => :provider
   validates :provider, length: { maximum: 50 }
   validates :uid, length: { maximum: 128 }
+
   validates :token, length: { maximum: 512 }
   validates :refresh_token, length: { maximum: 512 }
+
   validates :name, length: { maximum: 128 }
   validates :email, length: { maximum: 128 }
   validates :image_url, length: { maximum: 128 }

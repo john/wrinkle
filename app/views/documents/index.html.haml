@@ -16,18 +16,19 @@
 
 %h2
   Quip
-  %small
-    = link_to 'Update', retrieve_documents_path(:quip)
+  - if current_user.present? && current_user.quip_authed?
+    %small
+      = link_to 'Update', retrieve_documents_path(:quip)
 = render partial: 'documents', locals: {documents: @quip_docs}
 
 
 %h2
   Google Docs
-  - if current_user.google_authed?
+  - if current_user.present? && current_user.google_authed?
     %small
       = link_to 'Update', retrieve_documents_path(:google)
 
-- if current_user.google_authed?
+- if current_user.present? && current_user.google_authed?
   = render partial: 'documents', locals: {documents: @google_docs}
 - else
   %p

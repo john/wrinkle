@@ -6,6 +6,10 @@
     %meta{content: "width=device-width, initial-scale=1, shrink-to-fit=no", name: "viewport"}
     %meta{content: "ie=edge", "http-equiv": "x-ua-compatible"}
 
+    %meta{ 'http-equiv': "x-dns-prefetch-control", content: "on"}
+    %link{ rel: 'dns-prefetch', href: '//maxcdn.bootstrapcdn.com'}
+    %link{ rel: 'dns-prefetch', href: '//cdnjs.cloudflare.com'}
+
     = csrf_meta_tags
 
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'

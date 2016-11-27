@@ -6,14 +6,19 @@ class QuipService
   # at the moment this is actually getting all desktop threads. same thing as all threads?
   # TODO: get by user
   def self.get_all_documents(user)
-    user = QuipClient.get_authenticated_user()
-    desktop = QuipClient.get_folder(user['desktop_folder_id'])
+
+    token = user.organization.quip_auth.token
+    qc = Quip::QuipClient.new(access_token: token)
+
+    quip_user = qc.get_authenticated_user()
+
+    desktop = qc.get_folder(quip_user['desktop_folder_id'])
 
     threads = []
     desktop['children'].each do |c|
       c.each do |k, v|
         if k == 'thread_id'
-          t = QuipClient.get_thread(v)
+          t = qc.get_thread(v)
           threads << t
         end
       end

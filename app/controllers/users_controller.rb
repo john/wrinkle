@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  include UserParams
+
   skip_before_action :ensure_signup_complete, only: [:finish_signup]
   before_action :set_user, only: [:show, :finish_signup]
 
@@ -18,16 +20,5 @@ class UsersController < ApplicationController
       end
     end
   end
-
-  private
-
-    def set_user
-      @user = User.friendly.find(params[:id])
-    end
-
-    # Only allow a trusted parameter "white list" through.
-    def user_params
-      params.require(:user).permit(:name, :description, :email)
-    end
 
 end
