@@ -14,13 +14,12 @@ gem 'pg'
 gem 'puma'
 gem 'rails', '>= 5.0.0', '< 5.1'
 gem 'rails_admin'
-gem 'rest-client', '>= 1.7.3'
-gem 'quip'
+gem 'rest-client', '>= 2.0.0'
+gem 'quip', :git => "https://github.com/john/quip-ruby.git"
 gem 'rspec-rails'
 gem 'sass-rails'
 gem 'turbolinks', '~> 5'
 gem 'uglifier', '>= 1.3.0'
-gem 'unirest', :git => 'https://github.com/Mashape/unirest-ruby'
 gem 'will_paginate'
 
 # Use CoffeeScript for .coffee assets and views

@@ -1,0 +1,1 @@
+PROVIDERS = [:google_drive, :wordpress, :quip]

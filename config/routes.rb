@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   resources :documents
   match '/documents/:provider/retrieve' => 'documents#retrieve', via: :get, :as => :retrieve_documents
+  match '/documents/:provider/retrieve/:document_id' => 'documents#retrieve', via: :get, :as => :retrieve_document
+  match '/documents/:provider/export/:document_id' => 'documents#export', via: :get, :as => :export_document
 
   resources :identities, only: [:destroy]
   resources :users, only: [:show, :destroy]

@@ -9,4 +9,4 @@
 acmesoft = Organization.create(name: 'Acme Software')
 User.create(name: 'John McGarth', email: 'john@fnnny.com', password: 'latte4me', organization_id: acmesoft.id)
 Authentication.create(organization_id: acmesoft.id, provider: 'quip', token: 'ZU1IQU1BT25DZFM=|1510733233|Jbt8mfIEv5lOYW2NRGRVPHKYVUzFMVqAeuceDXrlRvs=')
-
+Authentication.create(organization_id: acmesoft.id, provider: 'wordpress', site_id: '120507246', token: '')

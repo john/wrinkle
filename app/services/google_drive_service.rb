@@ -21,14 +21,15 @@ class GoogleDriveService
     client.list_files(fields: 'files(id,name,created_time,modified_time,kind,mime_type,web_view_link)').files
   end
 
-  def self.get_body(user, id)
+  def self.export(user, id, format='text/html')
     client = get_authorized_client(user)
-    client.export_file(id, 'text/html')
+    file = client.export_file(id, format)
   end
 
 
   private
 
+  # see first comment here: http://www.thegreatcodeadventure.com/using-the-google-api-ruby-client-with-google-calendar-api/
   def self.get_authorized_client(user)
     secrets = Google::APIClient::ClientSecrets.new( user.google_secrets )
     client = Google::Apis::DriveV3::DriveService.new

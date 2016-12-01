@@ -6,12 +6,9 @@ class QuipService
   # at the moment this is actually getting all desktop threads. same thing as all threads?
   # TODO: get by user
   def self.get_all_documents(user)
-
     token = user.organization.quip_auth.token
     qc = Quip::QuipClient.new(access_token: token)
-
     quip_user = qc.get_authenticated_user()
-
     desktop = qc.get_folder(quip_user['desktop_folder_id'])
 
     threads = []
@@ -26,4 +23,9 @@ class QuipService
     threads
   end
 
+  def self.create_document(user, document)
+    token = user.organization.quip_auth.token
+    qc = Quip::QuipClient.new(access_token: token)
+    qc.create_document(document.body_html, {title: document.title})
+  end
 end

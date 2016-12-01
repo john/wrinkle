@@ -16,12 +16,20 @@ ActiveRecord::Schema.define(version: 20161127025507) do
   enable_extension "plpgsql"
 
   create_table "authentications", force: :cascade do |t|
-    t.string   "provider",           default: "", null: false
-    t.string   "encrypted_token",    default: "", null: false
-    t.string   "encrypted_token_iv", default: "", null: false
+    t.string   "provider",              default: "", null: false
+    t.string   "encrypted_email",       default: "", null: false
+    t.string   "encrypted_email_iv",    default: "", null: false
+    t.string   "encrypted_token",       default: "", null: false
+    t.string   "encrypted_token_iv",    default: "", null: false
+    t.string   "encrypted_username",    default: "", null: false
+    t.string   "encrypted_username_iv", default: "", null: false
+    t.string   "encrypted_password",    default: "", null: false
+    t.string   "encrypted_password_iv", default: "", null: false
+    t.string   "encrypted_site_id",     default: "", null: false
+    t.string   "encrypted_site_id_iv",  default: "", null: false
     t.integer  "organization_id"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.index ["organization_id"], name: "index_authentications_on_organization_id", using: :btree
     t.index ["provider"], name: "index_authentications_on_provider", using: :btree
   end
@@ -30,12 +38,14 @@ ActiveRecord::Schema.define(version: 20161127025507) do
     t.string   "slug",                           null: false
     t.string   "source",            default: "", null: false
     t.string   "source_id",         default: "", null: false
+    t.string   "source_slug",       default: "", null: false
     t.datetime "source_created_at"
     t.datetime "source_updated_at"
     t.string   "source_link",       default: "", null: false
     t.string   "kind",              default: "", null: false
     t.string   "mime_type",         default: "", null: false
     t.string   "title",             default: "", null: false
+    t.string   "author_id",         default: "", null: false
     t.string   "author",            default: "", null: false
     t.string   "dateline",          default: "", null: false
     t.string   "subtitle",          default: "", null: false
