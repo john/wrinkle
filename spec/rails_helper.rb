@@ -8,6 +8,10 @@ require 'rspec/rails'
 
 require 'devise'
 require 'support/controller_macros.rb'
+
+require 'public_activity/testing'
+PublicActivity.enabled = false
+
 # require 'vcr'
 
 # Add additional requires below this line. Rails is not loaded until this point!

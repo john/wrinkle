@@ -83,7 +83,10 @@ class DocumentsController < ApplicationController
       document = Document.find(params[:document_id])
 
       # Check some kind of audit table to see if this has already been exported. use public_activity
-      "#{params[:provider].titleize}Service".constantize.create_document(current_user, document)\
+      "#{params[:provider].titleize}Service".constantize.create_document(current_user, document)
+
+      # TODO: make sure it records provider
+      @document.create_activity key: 'document.exported', owner: current_user
 
 
       flash[:notice] = "Document successfully exported to #{params[:provider].titleize}"

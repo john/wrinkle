@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include PublicActivity::StoreController
   protect_from_forgery with: :exception, prepend: true
 
   rescue_from(ActionController::RoutingError, ActionController::UnknownController, ActiveRecord::RecordNotFound) do

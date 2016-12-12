@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/john/omniauth-wordpress-oauth2-plugin.git
+  revision: fa3915665106855738ac055b22be6b96ca37fb79
+  specs:
+    omniauth-wordpress_hosted (0.0.5)
+      omniauth-oauth2
+
+GIT
   remote: https://github.com/john/quip-ruby.git
   revision: 8b6b3bf8317d792534a17784dfd0275dadae9fc9
   specs:
@@ -7,10 +14,21 @@ GIT
 
 GIT
   remote: https://github.com/norman/friendly_id.git
-  revision: 971fecfcc55c43048ea992f0e1c80e490271ffc8
+  revision: 920af016381689e715af104eead1564ae8f43e15
   specs:
     friendly_id (5.2.0)
       activerecord (>= 4.0.0)
+
+GIT
+  remote: https://github.com/plataformatec/devise.git
+  revision: 8a4d610c587ca7d0f5ce40d9a4a28a2da717f1e9
+  specs:
+    devise (4.2.0)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 4.1.0, < 5.1)
+      responders
+      warden (~> 1.2.3)
 
 GEM
   remote: https://rubygems.org/
@@ -74,14 +92,8 @@ GEM
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     debug_inspector (0.0.2)
-    devise (4.2.0)
-      bcrypt (~> 3.0)
-      orm_adapter (~> 0.1)
-      railties (>= 4.1.0, < 5.1)
-      responders
-      warden (~> 1.2.3)
     diff-lcs (1.2.5)
-    domain_name (0.5.20161021)
+    domain_name (0.5.20161129)
       unf (>= 0.0.5, < 1.0.0)
     dotenv (2.1.1)
     dotenv-rails (2.1.1)
@@ -136,7 +148,7 @@ GEM
       ruby_parser (~> 3.5)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
-    httpclient (2.8.2.4)
+    httpclient (2.8.3)
     humane-rails (5.1.0)
       rails (>= 3.2.0)
     hurley (0.2)
@@ -168,9 +180,9 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
     mini_portile2 (2.1.0)
-    minitest (5.9.1)
+    minitest (5.10.1)
     multi_json (1.12.1)
-    multi_xml (0.5.5)
+    multi_xml (0.6.0)
     multipart-post (2.0.0)
     nested_form (0.3.2)
     netrc (0.11.0)
@@ -199,6 +211,11 @@ GEM
     orm_adapter (0.5.0)
     os (0.9.6)
     pg (0.19.0)
+    public_activity (1.5.0)
+      actionpack (>= 3.0.0)
+      activerecord (>= 3.0)
+      i18n (>= 0.5.0)
+      railties (>= 3.0.0)
     public_suffix (2.0.4)
     puma (3.6.2)
     rack (2.0.1)
@@ -247,7 +264,7 @@ GEM
       method_source
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
-    rake (11.3.0)
+    rake (12.0.0)
     rb-fsevent (0.9.8)
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
@@ -317,7 +334,7 @@ GEM
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uber (0.0.15)
-    uglifier (3.0.3)
+    uglifier (3.0.4)
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
@@ -330,7 +347,7 @@ GEM
       activemodel (>= 5.0)
       debug_inspector
       railties (>= 5.0)
-    webmock (2.1.0)
+    webmock (2.3.1)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
@@ -346,7 +363,7 @@ DEPENDENCIES
   attr_encrypted
   bundler-audit
   byebug
-  devise
+  devise!
   dotenv-rails
   factory_girl_rails
   friendly_id!
@@ -357,7 +374,9 @@ DEPENDENCIES
   listen (~> 3.0.5)
   omniauth-facebook
   omniauth-google-oauth2
+  omniauth-wordpress_hosted!
   pg
+  public_activity
   puma
   quip!
   rails (>= 5.0.0, < 5.1)

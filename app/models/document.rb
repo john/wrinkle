@@ -1,10 +1,16 @@
 class Document < ApplicationRecord
   include Providers
 
+  include PublicActivity::Model
+  tracked owner: proc {|controller, model| controller.current_user }, provider: proc {|controller, model| model.source }
+
   extend FriendlyId
   friendly_id :title, use: :slugged
 
   validates :title, length: { maximum: 200 }, presence: true
+
+  # TODO: all these 'create_or_update_from_*' methods can be condensed
+  #       into a single generalized method.
 
   # READ
   def self.create_or_update_from_google_drive(id, file)
@@ -47,6 +53,7 @@ class Document < ApplicationRecord
 
   # WRITE
 
+  # TODO: call this 'teleport_to(provider: :wordpress, provider_id: 1234) (or 'beam_to'? just 'send_to'?)
   def push_to_wordpress
     WordpressService.create_post( {} )
   end

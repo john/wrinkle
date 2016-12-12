@@ -10,10 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161127025507) do
+ActiveRecord::Schema.define(version: 20161201074008) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "activities", force: :cascade do |t|
+    t.string   "trackable_type"
+    t.integer  "trackable_id"
+    t.string   "owner_type"
+    t.integer  "owner_id"
+    t.string   "key"
+    t.string   "provider"
+    t.text     "parameters"
+    t.string   "recipient_type"
+    t.integer  "recipient_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type", using: :btree
+    t.index ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
+    t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
+  end
 
   create_table "authentications", force: :cascade do |t|
     t.string   "provider",              default: "", null: false
@@ -39,9 +56,9 @@ ActiveRecord::Schema.define(version: 20161127025507) do
     t.string   "source",            default: "", null: false
     t.string   "source_id",         default: "", null: false
     t.string   "source_slug",       default: "", null: false
+    t.string   "source_link",       default: "", null: false
     t.datetime "source_created_at"
     t.datetime "source_updated_at"
-    t.string   "source_link",       default: "", null: false
     t.string   "kind",              default: "", null: false
     t.string   "mime_type",         default: "", null: false
     t.string   "title",             default: "", null: false

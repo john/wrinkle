@@ -248,7 +248,7 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-  config.omniauth :facebook, ENV['FB_APP_ID'], ENV['FB_APP_SECRET'], {
+  config.omniauth :facebook, ENV['FB_OAUTH_CLIENT_ID'], ENV['FB_OAUTH_SECRET'], {
     scope: 'email,pages_manage_instant_articles,pages_show_list',
     display: 'popup'
   }
@@ -258,6 +258,27 @@ Devise.setup do |config|
     prompt: "consent",
     include_granted_scopes: true
   }
+
+  config.omniauth :wordpress_hosted, '50722', 'e8BeueuMvMZcx3JXmmMFmet6UmmwX6mVTq2I3kwyTfzDAA44nOaI4PsWv6zsqa8M',
+    strategy_class: OmniAuth::Strategies::WordpressHosted,
+    client_options: {
+      site: 'https://public-api.wordpress.com/',
+      token_url: 'https://public-api.wordpress.com/oauth2/token/',
+      authorize_url: 'https://public-api.wordpress.com/oauth2/authorize/'
+    }
+
+  # semi-works:
+  # config.omniauth :wordpress_oauth2, '50722', 'DRJ1UXTXQsqHHsU71s3U5GBDVqs800j0zpa3xJWT6LZLFG6ib5q2qpP7BB1Zuj8b',
+  #   strategy_class: OmniAuth::Strategies::WordpressHosted,
+  #   client_options: { site: 'https://getwrinkle.wordpress.com/' }
+
+
+  # config.omniauth :wordpress_oauth2, ENV['WP_OAUTH_CLIENT_ID'], ENV['WP_OAUTH_SECRET'], {
+  #   strategy_class: OmniAuth::Strategies::WordpressHosted
+  # }
+
+  # ,
+  #     client_options: { site: 'https://getwrinkle.wordpress.com/' }
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
