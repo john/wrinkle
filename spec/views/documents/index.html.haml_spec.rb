@@ -20,6 +20,10 @@ RSpec.describe "documents/index", type: :view do
         :body_html=> "MyText"
       )
     ])
+
+    assign(:services, {
+      Quip: []
+    })
   end
 
   it "renders" do

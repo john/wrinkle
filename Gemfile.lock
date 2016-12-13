@@ -13,13 +13,6 @@ GIT
       rest-client
 
 GIT
-  remote: https://github.com/norman/friendly_id.git
-  revision: 920af016381689e715af104eead1564ae8f43e15
-  specs:
-    friendly_id (5.2.0)
-      activerecord (>= 4.0.0)
-
-GIT
   remote: https://github.com/plataformatec/devise.git
   revision: 8a4d610c587ca7d0f5ce40d9a4a28a2da717f1e9
   specs:
@@ -154,6 +147,8 @@ GEM
     ffi (1.9.14)
     font-awesome-rails (4.7.0.0)
       railties (>= 3.2, < 5.1)
+    friendly_id (5.2.0)
+      activerecord (>= 4.0.0)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     google-api-client (0.9.20)
@@ -386,7 +381,7 @@ DEPENDENCIES
   devise!
   dotenv-rails
   factory_girl_rails
-  friendly_id!
+  friendly_id
   google-api-client
   haml-rails
   humane-rails
