@@ -1,0 +1,12 @@
+#{link_to document.title, document, target: '_blank'}
+%span.publish
+  [
+  #{link_to 'original', document.link, target: '_blank'}
+
+  - if !local_assigns[:provider].nil? && local_assigns[:provider] == 'google_drive'
+    &nbsp; &#183; &nbsp;
+    = link_to 'import', export_document_path('google_drive', document.source_id)
+  ]
+.publish
+  - unless document.source == 'quip'
+    push to #{link_to 'Quip', export_document_path('quip', document.id)}

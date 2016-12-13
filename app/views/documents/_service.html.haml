@@ -1,0 +1,17 @@
+%h2
+  = service[0]
+
+  -# TODO: Only let authorized users do update
+  %small
+    = link_to 'Update', retrieve_documents_path( service[0] )
+
+%ul.doc-list
+  - if service[1].present?
+    - service[1].each do |document|
+      %li
+        = render partial: 'document', locals: {document: document}
+
+  - else
+    %li
+      %i
+        None available.

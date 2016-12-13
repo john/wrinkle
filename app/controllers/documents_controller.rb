@@ -6,6 +6,8 @@ class DocumentsController < ApplicationController
     @quip_docs = Document.where(source: 'quip')
     @google_docs = Document.where(source: 'google_drive')
     @wordpress_docs = Document.where(source: 'wordpress')
+
+    @services = { WordPress: @wordpress_docs, Google: @google_docs, Quip: @quip_docs }
   end
 
   def show

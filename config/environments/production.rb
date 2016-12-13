@@ -1,4 +1,7 @@
 Rails.application.configure do
+  # Make javascript_pack_tag lookup digest hash to enable long-term caching
+  config.x.webpacker[:digesting] = true
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
@@ -52,15 +55,9 @@ Rails.application.configure do
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
 
-  # Asked for by Devise:
-  config.action_mailer.default_url_options = { host: 'fnnny.com', port: 80 }
-
   # Use a real queuing backend for Active Job (and separate queues per environment)
-
-  config.active_job.queue_adapter = :inline
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "wrinkle_#{Rails.env}"
-
   config.action_mailer.perform_caching = false
 
   # Ignore bad email addresses and do not raise email delivery errors.

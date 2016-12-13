@@ -1,11 +1,3 @@
-:css
-  h1 { margin-bottom: 40px; }
-  h2 { margin-top: 40px; }
-  small { font-size: 15px; font-weight: bold; margin-left: 10px;}
-  small a { color: #aaa; }
-  .publish { color: #ccc; font-size: 13px; margin-bottom: 15px; }
-  .publish a { color: #777; }
-
 %h1
   .float-xs-right{ style: 'width: 400px; margin-top: 5px;'}
     .input-group
@@ -14,35 +6,43 @@
         %button.btn.btn-secondary{type: "button", onclick: "alert('Psych!');"} Go
   Documents
 
-<hr>
-providers: #{PROVIDERS.join(', ')}
-<hr>
 
-%h2
-  WordPress
-  -# - if current_user.present? && current_user.quip_authed?
-  %small
-    = link_to 'Update', retrieve_documents_path(:wordpress)
-= render partial: 'documents', locals: {documents: @wordpress_docs}
+- @services.each do |service|
+  = render partial: 'service', locals: {service: service}
+
+/ %h2
+/   WordPress
+/   -# - if current_user.present? && current_user.quip_authed?
+/   %small
+/     = link_to 'Update', retrieve_documents_path(:wordpress)
+/ = render partial: 'documents', locals: {documents: @wordpress_docs}
+/
+/
+/ %h2
+/   Quip
+/   - if current_user.present? && current_user.quip_authed?
+/     %small
+/       = link_to 'Update', retrieve_documents_path(:quip)
+/ = render partial: 'documents', locals: {documents: @quip_docs}
+/
+/ %h2
+/   Google Docs
+/   - if current_user.present? && current_user.google_authed?
+/     %small
+/       = link_to 'Update', retrieve_documents_path(:google_drive)
+/ = render partial: 'documents', locals: {documents: @google_docs, provider: 'google_drive'}
 
 
-%h2
-  Quip
-  - if current_user.present? && current_user.quip_authed?
-    %small
-      = link_to 'Update', retrieve_documents_path(:quip)
-= render partial: 'documents', locals: {documents: @quip_docs}
 
-
-%h2
-  Google Docs
-  - if current_user.present? && current_user.google_authed?
-    %small
-      = link_to 'Update', retrieve_documents_path(:google_drive)
-
-- if current_user.present? && current_user.google_authed?
-  = render partial: 'documents', locals: {documents: @google_docs, provider: 'google_drive'}
-- else
-  %p
-    %i
-      #{link_to 'Connect your Google account', omniauth_authorize_path('user', 'google_oauth2')} to import from Google Drive.
+/ %h2
+/   Google Docs
+/   - if current_user.present? && current_user.google_authed?
+/     %small
+/       = link_to 'Update', retrieve_documents_path(:google_drive)
+/
+/ - if current_user.present? && current_user.google_authed?
+/   = render partial: 'documents', locals: {documents: @google_docs, provider: 'google_drive'}
+/ - else
+/   %p
+/     %i
+/       #{link_to 'Connect your Google account', omniauth_authorize_path('user', 'google_oauth2')} to import from Google Drive.
